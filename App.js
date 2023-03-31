@@ -1,10 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from '@react-navigation/stack'
+import Homepage from "./components/screens/Homepage";
 
-export default function App() {
-  return (
-    <View>
-      <Text>Help</Text>
-    </View>
-  );
-}
-// testing final
+const navigator = createStackNavigator({
+    Home: Homepage
+  }, {
+    initialRouteName: 'Home',
+    defaultNavigationOptions : {
+      title: 'DoroFit'
+    }
+  }
+)
+
+export default createAppContainer(navigator);
