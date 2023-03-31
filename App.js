@@ -1,15 +1,17 @@
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Homepage from "./components/screens/Homepage";
 
-const navigator = createStackNavigator({
-    Home: Homepage
-  }, {
-    initialRouteName: 'Home',
-    defaultNavigationOptions : {
-      title: 'DoroFit'
-    }
-  }
-)
+const Stack = createNativeStackNavigator()
 
-export default createAppContainer(navigator);
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="DoroFit" component={Homepage} options={{headerTitleAlign:'center'}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
+
+export default App;
