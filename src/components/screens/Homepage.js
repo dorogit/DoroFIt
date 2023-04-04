@@ -1,37 +1,26 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import SearchBar from "../SearchBar";
-import edamam from "../../api/edamam";
+import useResults from "../../hooks/useResults";
+
 const Homepage = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [results, setResults] = useState(null)
-  const [error, setError] = useState(null)
+  const [searchApi, results, error] = useResults()
 
-  const onSearchSubmit = async (Term) => {
-    try {
-      const response = await edamam.get('',{
-        params:{
-          app_id:"d37abae3",
-          app_key:"6763fad46caf9a55c376a61b081d682b",
-          ingr:Term
-        }
-      })
-      setResults([...new Set(response.data.hints.map(({food}) => ({label:food.label, image:food.image, nutrients:food.nutrients})))])
-      console.log(results)
-    } catch (err) {
-      setError('something went wrong')
-    }
-  }
   return (
     <View style = {homeStyles.view}>
       <SearchBar 
         searchTerm={searchTerm} 
         handleSearch={(inputValue) => setSearchTerm(inputValue)}
-        onSubmit={() => {onSearchSubmit(searchTerm)}}
+        onSubmit={() => {searchApi(searchTerm)}}
       />
-      <Text>{searchTerm}</Text>
-      <Text>found results</Text>
-      <Text>{error}</Text>
+      <Text>found {results ? results.length : null} results</Text>
+      <FlatList
+        data={results}
+        renderItem={({item}) => <Text>{item.label}</Text>}
+        keyExtractor={(item) => item.id}
+      />
+      {error ? <Text>{error}</Text> : null}
     </View>
   )
 }
