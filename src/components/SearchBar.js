@@ -22,6 +22,7 @@ const searchStyles = StyleSheet.create({
     height:50,
     backgroundColor:'#cccccc',
     marginHorizontal:20,
+    marginBottom:15,
     borderRadius:10,
     display:'flex',
     flexDirection:'row',

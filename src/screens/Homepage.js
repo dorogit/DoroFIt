@@ -1,31 +1,30 @@
 import React, { useState } from "react";
 import { FlatList, Text, View,ScrollView } from "react-native";
-import SearchBar from "../SearchBar";
-import useResults from "../../hooks/useResults";
-import ResultsDetail from "../ResultsDetail";
+import SearchBar from "../components/SearchBar";
+import useResults from "../hooks/useResults";
+import ResultsDetail from "../components/ResultsDetail";
 
 const Homepage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchApi, results, error] = useResults()
 
   return (
-    <ScrollView>
+    <>
       <SearchBar 
         searchTerm={searchTerm} 
         handleSearch={(inputValue) => setSearchTerm(inputValue)}
         onSubmit={() => {searchApi(searchTerm)}}
       />
-      <Text>found {results ? results.length : null} results</Text>
+      {error ? <Text>{error}</Text> : null}
       <FlatList
         showsVerticalScrollIndicator= {false}
         data={results}
         renderItem={({item}) => (
-          <ResultsDetail title = {item.label} url = {item.image}></ResultsDetail>
+          <ResultsDetail title = {item.label} url = {item.image} nutrients = {item.nutrients} ></ResultsDetail>
         )}
         keyExtractor={(item) => item.id}
       />
-      {error ? <Text>{error}</Text> : null}
-    </ScrollView>
+    </>
   )
 }
 
