@@ -3,7 +3,6 @@ import { Card } from "@rneui/base";
 import { View, Image,Text } from "react-native";
 
 const ResultsDetail = ({title,url, nutrients}) => {
-  console.log(nutrients)
   return (
     <Card containerStyle={{}} wrapperStyle={{}}>
       <Card.Title>{title}</Card.Title>
